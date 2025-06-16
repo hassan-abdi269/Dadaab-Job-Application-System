@@ -39,6 +39,11 @@ def home():
     return render_template('index.html')
 
 
+@app.route("/admin")
+def admin():
+    return render_template('admin.html')
+
+
 @app.route('/apply', methods=['POST'])
 def apply():
     data = request.get_json()
