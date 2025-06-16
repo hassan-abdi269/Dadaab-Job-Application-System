@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Dadaab Applications</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <div class="max-w-6xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md">
+        <h2 class="text-3xl font-bold text-blue-700 mb-6 text-center">Admin Dashboard - Job Applications</h2>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-300 rounded-md shadow-sm">
+                <thead>
+                    <tr class="bg-blue-600 text-white text-left">
+                        <th class="px-4 py-2">Full Name</th>
+                        <th class="px-4 py-2">Email</th>
+                        <th class="px-4 py-2">Phone</th>
+                        <th class="px-4 py-2">Position</th>
+                        <th class="px-4 py-2">CV Link</th>
+                    </tr>
+                </thead>
+                <tbody id="appTable" class="text-gray-700">
+                    <!-- Rows will be inserted here dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        fetch("http://127.0.0.1:5001/admin/applications")
+            .then(res => res.json())
+            .then(data => {
+                const table = document.getElementById("appTable");
+                data.forEach(app => {
+                    const row = document.createElement("tr");
+                    row.className = "border-t hover:bg-gray-100";
+
+                    row.innerHTML = `
+                        <td class="px-4 py-2">${app.full_name}</td>
+                        <td class="px-4 py-2">${app.email}</td>
+                        <td class="px-4 py-2">${app.phone}</td>
+                        <td class="px-4 py-2">${app.position}</td>
+                        <td class="px-4 py-2">
+                            <a href="${app.cv_link}" target="_blank" class="text-blue-600 hover:underline">View CV</a>
+                        </td>
+                    `;
+                    table.appendChild(row);
+                });
+            })
+            .catch(err => console.error("Error loading applications:", err));
+    </script>
+</body>
+
+</html>

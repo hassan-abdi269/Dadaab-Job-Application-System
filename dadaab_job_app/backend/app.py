@@ -1,5 +1,5 @@
 import json
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from pathlib import Path
 
@@ -32,7 +32,11 @@ def save_data(data):
     with open(DATA_FILE, 'w') as f:
         json.dump(data, f, indent=2)
 
+
 # Endpoint to handle job applications
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 
 @app.route('/apply', methods=['POST'])
